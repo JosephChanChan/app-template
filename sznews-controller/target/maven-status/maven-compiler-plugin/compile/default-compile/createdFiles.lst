@@ -1,0 +1,7 @@
+com\byb\sznews\system\UserController.class
+com\byb\sznews\realm\SimpleSRealm.class
+com\byb\sznews\system\RolePermissionController.class
+com\byb\sznews\ApplicationContext.class
+com\byb\sznews\system\RoleMenuController.class
+com\byb\sznews\system\UserRoleController.class
+com\byb\sznews\system\AuthController.class

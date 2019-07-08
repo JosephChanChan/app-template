@@ -1,0 +1,8 @@
+com\byb\service\impl\system\UserRoleServiceImpl.class
+com\byb\service\impl\BaseServiceImpl.class
+com\byb\service\impl\system\UserServiceImpl.class
+com\byb\service\impl\system\RoleServiceImpl.class
+com\byb\service\impl\system\PermissionServiceImpl.class
+com\byb\service\impl\system\MenuServiceImpl.class
+com\byb\service\impl\system\RoleMenuServiceImpl.class
+com\byb\service\impl\system\RolePermissionServiceImpl.class

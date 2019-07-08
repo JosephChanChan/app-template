@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+    <!-- 注意：这要填好自己的项目名 -->
+    <property name="projectName" value="sznews"/>
+    <property name="serverContext" value="${server.context}"/>
+    <if condition='property("serverContext").contains("windows")'>
+        <then>
+            <!-- 注意：部署在windows server下的路径 -->
+            <property name="logDir" value="D:\\sznews-log"/>
+        </then>
+        <else>
+            <!-- 注意：Linux下为 /usr/sznews-log -->
+            <property name="logDir" value="/usr/sznews-log"/>
+        </else>
+    </if>
+
+    <!-- 控制保留的归档文件的最大数量，超出数量就删除旧文件。假设设置每天滚动，且 <maxHistory>是10，则只保存最近10天的文件，删除之前的旧文件。注意，删除旧文件是，那些为了归档而创建的目录也会被删除。-->
+    <property name="maxHistory" value="15"/>
+    <!-- 控制保留的归档文件的最大数量，超出数量就删除旧文件（针对error日志）。 -->
+    <property name="errorMaxHistory" value="30"/>
+
+    <!-- 控制台日志：输出全部日志到控制台 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- encoder 即 Layout 布局，指定输出日志的格式 -->
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level [%logger{36}:%L] - %msg%n</pattern>
+            <charset class="java.nio.charset.Charset">UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- 文件日志：输出全部日志到文件 -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>DENY</onMatch>
+            <onMismatch>ACCEPT</onMismatch>
+        </filter>
+        <file>${logDir}\\${projectName}.log</file>
+        <!-- 日志滚动策略 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logDir}\\${projectName}-%d{yyyy-MM-dd}.zip</fileNamePattern>
+            <maxHistory>${maxHistory}</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level [%logger{36}:%L] - %msg%n</pattern>
+            <charset class="java.nio.charset.Charset">GBK</charset>
+        </encoder>
+    </appender>
+
+    <!-- 错误日志：用于将错误日志输出到独立文件 -->
+    <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <file>${logDir}\\${projectName}-error.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logDir}\\${projectName}-error-%d{yyyy-MM-dd}.zip</fileNamePattern>
+            <maxHistory>${errorMaxHistory}</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level [%logger{36}:%L] - %msg%n</pattern>
+            <charset class="java.nio.charset.Charset">GBK</charset>
+        </encoder>
+    </appender>
+
+    <!-- 追踪日志：用于将追踪日志输出到独立文件 -->
+    <appender name="TRACE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logDir}\\${projectName}-trace.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logDir}\\${projectName}-trace-%d{yyyy-MM-dd}.zip</fileNamePattern>
+            <maxHistory>${maxHistory}</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level [%logger{36}:%L] - %msg%n</pattern>
+            <charset class="java.nio.charset.Charset">GBK</charset>
+        </encoder>
+    </appender>
+
+    <logger name="org.springframework.data.mongodb" level="INFO"/>
+    <logger name="org.apache.ibatis" level="DEBUG"/>
+    <logger name="java.sql" level="DEBUG"/>
+
+    <logger name="WebRequestTraceFilter" level="DEBUG" additivity="false">
+        <appender-ref ref="TRACE"/>
+    </logger>
+
+    <!-- 日志输出级别 -->
+    <root>
+        <!-- 生产环境日志必须为INFO级别，否则日志太多（主要是其它非业务组件打印的） -->
+        <level value="INFO"/>
+        <!-- 生产环境控制台日志输出关闭，否则在tomcat的catalina文件或springboot的nohub文件会日志量太大且不按天切分将影响系统性能 -->
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="ERROR"/>
+    </root>
+
+</configuration>
