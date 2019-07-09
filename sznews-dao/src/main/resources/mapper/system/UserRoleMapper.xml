@@ -9,4 +9,14 @@
         <result column="role_id" property="roleId" />
     </resultMap>
 
+
+    <insert id="insertRoleUser">
+        insert into user_role(user_id, role_id)
+        values
+        <foreach collection="userIds" item="userId" separator=",">
+            (#{userId},#{roleId})
+        </foreach>
+    </insert>
+
+
 </mapper>

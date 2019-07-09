@@ -13,5 +13,8 @@ import com.byb.service.BaseService;
  */
 public interface UserService extends BaseService<User> {
 
-    User selectBy(String userName);
+    User selectBy(String loginName);
+
+    boolean modifyUserPsd(Integer userId, String newPsd);
+
 }

@@ -159,6 +159,10 @@ public final class Result<T> implements Serializable{
 		return new Result<>(INVALID_PARAM, "参数校验不通过");
 	}
 
+	public static <T> Result<T> invalidParam(String message){
+		return new Result<>(INVALID_PARAM, message);
+	}
+
 	public static <T> Result<T> notFound(){
 		return new Result<>(API_NOT_EXIST, "请求地址错误");
 	}

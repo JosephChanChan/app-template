@@ -147,7 +147,7 @@ public class MysqlGenerator {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 // 自定义输入文件名称
-                return projectPath + "/sznews-controller/src/main/java/com/byb/sznews/" + moduleName
+                return projectPath + "/sznews-controller/src/main/java/com/byb/sznews/api/" + moduleName
                         + "/" + tableInfo.getControllerName() + StringPool.DOT_JAVA;
             }
         });

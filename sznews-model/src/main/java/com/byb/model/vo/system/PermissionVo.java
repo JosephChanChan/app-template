@@ -33,5 +33,8 @@ public class PermissionVo {
     @ApiModelProperty(value = "资源路径",name="url")
     private String url;
 
+    @ApiModelProperty(value = "选中权限 0未选中，1选中",name="checkedPermission")
+    private Integer checkedPermission;
+
 
 }

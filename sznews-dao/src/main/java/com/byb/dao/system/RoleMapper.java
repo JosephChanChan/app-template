@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.byb.model.entity.system.Role;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 
 /**
  * <p>
@@ -16,4 +18,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RoleMapper extends BaseMapper<Role> {
 
+    List<Role> selectByUserId(Integer userId);
 }

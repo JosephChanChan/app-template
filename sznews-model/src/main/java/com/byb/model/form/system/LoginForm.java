@@ -14,7 +14,7 @@ import lombok.Data;
 public class LoginForm {
 
     @NotEmpty
-    @ApiModelProperty(value = "登录名",name="login_name")
+    @ApiModelProperty(value = "登录名",name="loginName")
     private String loginName;
 
     @NotEmpty

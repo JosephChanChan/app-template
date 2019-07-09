@@ -31,15 +31,16 @@ public class UserVo {
 
     private String password;
 
-    @ApiModelProperty(value = "加密盐",name="salt")
-    private String salt;
-
     private Integer status;
-
-    private Integer createUserId;
 
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Timestamp createTime;
 
+    @ApiModelProperty(value = "是否选中角色, 0 未选中，1 选中",name="checkedRole")
+    private Integer checkedRole;
 
+
+    /*@ApiModelProperty(value = "加密盐",name="salt")
+    private String salt;
+    */
 }

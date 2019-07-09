@@ -7,6 +7,8 @@ import com.byb.service.system.MenuService;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 /**
  * <p>
  * 菜单表 服务实现类
@@ -20,4 +22,10 @@ public class MenuServiceImpl extends BaseServiceImpl<MenuMapper, Menu> implement
 
     @Autowired
     private MenuMapper menuMapper;
+
+
+    @Override
+    public List<Menu> selectBy(Integer userId) {
+        return menuMapper.selectBy(userId);
+    }
 }

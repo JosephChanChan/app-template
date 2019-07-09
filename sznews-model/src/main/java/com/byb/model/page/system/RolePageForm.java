@@ -16,4 +16,5 @@ public class RolePageForm extends PageForm<Role> {
 
     private String keyword;
 
+    private Integer roleId;
 }

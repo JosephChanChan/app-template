@@ -10,4 +10,15 @@
         <result column="parent_id" property="parentId" />
     </resultMap>
 
+
+    <select id="selectBy" resultMap="BaseResultMap">
+        select
+        m.*
+        from role_menu rm
+        join menu m on rm.menu_id = m.id
+        join user_role ur on ur.role_id = rm.role_id
+        and ur.user_id = #{userId}
+    </select>
+
+
 </mapper>

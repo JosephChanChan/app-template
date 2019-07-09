@@ -9,4 +9,14 @@
         <result column="permission_id" property="permissionId" />
     </resultMap>
 
+    <insert id="insertRolePermission">
+        insert into role_permission(role_id, permission_id)
+        values
+        <foreach collection="permissionIds" item="permissionId" separator=",">
+            (#{roleId}, #{permissionId})
+        </foreach>
+    </insert>
+
+
+
 </mapper>

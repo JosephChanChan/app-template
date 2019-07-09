@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.sql.Timestamp;
 import java.sql.Date;
+import java.util.List;
+
 import lombok.Data;
 
 /**

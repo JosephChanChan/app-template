@@ -1,8 +1,0 @@
-com\byb\service\system\UserService.class
-com\byb\service\system\RolePermissionService.class
-com\byb\service\BaseService.class
-com\byb\service\system\MenuService.class
-com\byb\service\system\PermissionService.class
-com\byb\service\system\UserRoleService.class
-com\byb\service\system\RoleService.class
-com\byb\service\system\RoleMenuService.class

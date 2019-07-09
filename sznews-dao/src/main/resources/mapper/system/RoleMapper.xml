@@ -9,4 +9,8 @@
         <result column="role_code" property="roleCode" />
     </resultMap>
 
+    <select id="selectByUserId" resultMap="BaseResultMap">
+        select r.* from role r join user_role ur on r.id = ur.role_id and ur.user_id = #{userId}
+    </select>
+
 </mapper>

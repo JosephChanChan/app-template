@@ -20,4 +20,5 @@ public class PermissionPageForm extends PageForm<Permission>{
 
     private String keyword;
 
+    private Integer roleId;
 }

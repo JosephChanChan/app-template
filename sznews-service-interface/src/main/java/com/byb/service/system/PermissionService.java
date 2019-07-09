@@ -1,7 +1,11 @@
 package com.byb.service.system;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.byb.model.entity.system.Permission;
+import com.byb.model.page.system.PermissionPageForm;
 import com.byb.service.BaseService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -14,4 +18,10 @@ import com.byb.service.BaseService;
  */
 public interface PermissionService extends BaseService<Permission> {
 
+
+    IPage highLightPermissionByRole(Integer roleId, PermissionPageForm pageForm);
+
+    void assignPermission(Integer roleId, List<Integer> permissionIds);
+
+    List<Permission> selectBy(Integer roleId);
 }

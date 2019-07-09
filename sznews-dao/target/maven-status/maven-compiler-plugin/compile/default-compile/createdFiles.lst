@@ -1,7 +1,0 @@
-com\byb\dao\system\UserMapper.class
-com\byb\dao\system\RoleMenuMapper.class
-com\byb\dao\system\MenuMapper.class
-com\byb\dao\system\PermissionMapper.class
-com\byb\dao\system\UserRoleMapper.class
-com\byb\dao\system\RoleMapper.class
-com\byb\dao\system\RolePermissionMapper.class
