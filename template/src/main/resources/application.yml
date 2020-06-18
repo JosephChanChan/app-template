@@ -1,0 +1,40 @@
+app:
+  version: 1.0.0
+  name: app-template
+
+## Spring Boot 内置Tomcat端口号调整的配置项
+server:
+  port: 8080
+  tomcat:
+    threads:
+      max: 200
+    uri-encoding: UTF-8
+    basedir: ~/developer/tomcat-upload
+  context: dev
+
+spring:
+  application:
+    name: ${app.name}
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://127.0.0.1/app_info?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: 12345678
+    driverClassName: com.mysql.jdbc.Driver
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
+    static-path-pattern: /statics/**
+  resources:
+    static-locations: /statics/
+
+
+### 使用指定环境的日志配置
+logging:
+  config: classpath:profile/dev/logback.xml
+
+swagger:
+  show: true
+  scan.package: com.joseph.template.api
+

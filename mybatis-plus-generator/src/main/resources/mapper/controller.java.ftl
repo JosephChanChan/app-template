@@ -1,13 +1,13 @@
 package ${package.Controller};
 
 import org.springframework.web.bind.annotation.*;
-import com.byb.framework.result.Result;
+import Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import com.byb.framework.utils.stomp.ReflectionUtils;
-import com.byb.framework.annotation.OAuth;
+import ReflectionUtils;
+import OAuth;
 import com.byb.model.vo.system.UserVo;
-import com.byb.framework.utils.stomp.DateKit;
+import DateKit;
 <#if restControllerStyle>
 import org.springframework.web.bind.annotation.RestController;
 <#else>

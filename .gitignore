@@ -1,0 +1,8 @@
+framework/target/
+mybatis-plus-generator/target/
+template/target/
+~/
+template/~/
+*.log
+*.class
+*.iml
