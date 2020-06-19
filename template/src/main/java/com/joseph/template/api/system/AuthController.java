@@ -5,16 +5,16 @@ import com.joseph.framework.result.Result;
 import com.joseph.framework.utils.encoder.PasswordUtils;
 import com.joseph.template.model.dto.LoginDto;
 import com.joseph.template.model.dto.UserDto;
-import com.joseph.template.model.entity.Menu;
+import com.joseph.template.model.entity.BackendUser;
+import com.joseph.template.model.entity.DataDictionary;
+import com.joseph.template.model.entity.DevUser;
 import com.joseph.template.model.entity.User;
-import com.joseph.template.service.MenuService;
+import com.joseph.template.service.IBackendUserService;
+import com.joseph.template.service.IDataDictionaryService;
+import com.joseph.template.service.IDevUserService;
 import com.joseph.template.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AccountException;
-import org.apache.shiro.authc.DisabledAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -22,72 +22,63 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Joseph
  * @since 2019/7/6 16:53
  */
-@Controller
 @Api("认证API")
+@Controller
 @RequestMapping(value="auth")
 public class AuthController {
 
     private Logger logger = LoggerFactory.getLogger(AuthController.class);
 
     @Autowired
-    private UserService userService;
+    private IBackendUserService backendUserService;
     @Autowired
-    private MenuService menuService;
+    private IDevUserService devUserService;
+    @Autowired
+    private IDataDictionaryService dictionaryService;
 
 
     @PostMapping("/register")
     @ApiOperation(value="注册")
+    @ResponseBody
     public Result register(UserDto userDto) {
-        // 登录名唯一限制
-        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("login_name", userDto.getLoginName());
-        int count = userService.count(queryWrapper);
-        // 虽然这样做有很小的一点时间间隔，但是没关系，用户量很小
-        if (count > 0) {
-            return Result.fail(Result.INVALID_PARAM, "登录名已存在，请更改！");
-        }
-        User user = new User();
-        BeanUtils.copyProperties(userDto, user);
-        // Md5 ( 密码+盐 )
-        user.setSalt(userDto.getLoginName());
-        String encrypt = PasswordUtils.encrypt(user.getPassword(), user.getSalt());
-        user.setPassword(encrypt);
-        boolean save = userService.save(user);
-        return save ? Result.success() : Result.systemError();
+        return Result.success();
     }
 
     @PostMapping("/login")
     @ApiOperation(value="登录")
-    public Result login(LoginDto loginDto) {
-        UsernamePasswordToken token = new UsernamePasswordToken(loginDto.getLoginName(), loginDto.getPassword());
-        try {
-            SecurityUtils.getSubject().login(token);
+    @ResponseBody
+    public Result login(LoginDto loginDto, HttpServletRequest request) {
+        if ("backend".equals(loginDto.getRealm().toLowerCase())) {
+            QueryWrapper<BackendUser> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("userCode", loginDto.getLoginName())
+                        .eq("userPassword", loginDto.getCipher());
+            BackendUser one = backendUserService.getOne(queryWrapper);
+            if (null == one) {
+                return Result.success().setData(false);
+            }
+            DataDictionary data = dictionaryService.query(one.getUserType());
+            one.setDataDictionary(data);
+            request.getSession().setAttribute("userSession", one);
         }
-        catch (DisabledAccountException e) {
-            logger.error("帐号已经禁用！", e);
-            return Result.fail(Result.ACCOUNT_LOCKED, "帐号已经禁用。");
+        else {
+            QueryWrapper<DevUser> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("devName", loginDto.getLoginName())
+                        .eq("devPassword", loginDto.getCipher());
+            DevUser one = devUserService.getOne(queryWrapper);
+            if (null == one) {
+                return Result.success().setData(false);
+            }
+            request.getSession().setAttribute("devUserSession", one);
         }
-        catch (AccountException e) {
-            logger.error("帐号或密码错误！", e);
-            return Result.fail(Result.INVALID_PARAM, "帐号或密码错误");
-        }
-        catch (Exception e) {
-            logger.error(" login error !", e);
-            return Result.systemError();
-        }
-
-        // --- 登录成功，返回角色菜单
-        User principal = (User) SecurityUtils.getSubject().getPrincipal();
-        Integer userId = principal.getId();
-        List<Menu> menus = menuService.selectBy(userId);
-        return Result.success().setData(menus);
+        return Result.success().setData(true);
     }
 
 

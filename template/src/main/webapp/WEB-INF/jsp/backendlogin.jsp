@@ -35,12 +35,13 @@
         <div class="animate form login_form">
           <section class="login_content">
             <form action="#" method="post" id="fm">
+              <input type="hidden" name="realm" value="backend"/>
               <h1>后台管理系统</h1>
               <div>
-                <input type="text" class="form-control" name="userCode" placeholder="请输入用户名" required="" />
+                <input type="text" class="form-control" name="loginName" placeholder="请输入用户名" required="" />
               </div>
               <div>
-                <input type="password" class="form-control" name="userPassword" placeholder="请输入密码" required="" />
+                <input type="password" class="form-control" name="cipher" placeholder="请输入密码" required="" />
               </div>
               <span id="msg"></span>
               <div>
@@ -51,13 +52,13 @@
                 $("#dl").on("click",function () {
                     var params=$("#fm").serialize();
                     $.ajax({
-                        url:"${ctx}/backenduser/backendlogin.do",
+                        url:"${ctx}/auth/login",
                         type:"post",
                         data:params,
                         dataType:"json",
-                        success:function (data) {
-                            if(data.result=="true"){
-                                $(location).attr("href","${ctx}/backenduser/main.html")
+                        success:function (result) {
+                            if(result.data === true){
+                                $(location).attr("href","${ctx}/backend/mainPage")
                             }else {
                                 $("#msg").html("用户名密码不正确")
                             }

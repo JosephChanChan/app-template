@@ -10,5 +10,7 @@ import lombok.Data;
 public class LoginDto {
 
     private String loginName;
-    private String password;
+    private String cipher;
+
+    private String realm = "dev";
 }

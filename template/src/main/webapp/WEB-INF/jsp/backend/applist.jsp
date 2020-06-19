@@ -13,8 +13,8 @@
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
-				<form method="get" action="${ctx}/backenduser/applist.html">
-					<input type="hidden" name="pageIndex" value="1" />
+				<form method="get" action="${ctx}/backend/appListPage">
+					<input type="hidden" name="current" value="1" />
 			    <ul>
 					<li>
 						<div class="form-group">
@@ -188,14 +188,14 @@
 										<td>${appInfo.APKName }</td>
 										<td>${appInfo.softwareSize }</td>
 										<td>${appInfo.flatformName }</td>
-										<td>${appInfo.categoryLevel1Name } -> ${appInfo.categoryLevel2Name } -> ${appInfo.categoryLevel3Name }</td>
-										<td>${appInfo.statusName }</td>
+										<%--<td>${appInfo.categoryLevel1Name } -> ${appInfo.categoryLevel2Name } -> ${appInfo.categoryLevel3Name }</td--%>>
+										<td>${appInfo.status }</td>
 										<td>${appInfo.downloads }</td>
-										<td>${appInfo.versionNo }</td>
+										<td>${appInfo.versionId }</td>
 										<td>
 										<button type="button" class="btn btn-default checkApp" 
 											appinfoid="${appInfo.id }" versionid="${appInfo.versionId }" status="${appInfo.status }" 
-											statusname="${appInfo.statusName }"											
+											statusname="${appInfo.status }"
 											data-toggle="tooltip" data-placement="top" title="" data-original-title="查看并审核APP">审核</button>
 										</td>
 									</tr>
@@ -253,7 +253,7 @@
 	</div>
 	<script type="text/javascript">
 		function page_nav(fm,num) {
-			fm.pageIndex.value=num;
+			fm.current.value=num;
 			fm.submit();
         }
 	</script>

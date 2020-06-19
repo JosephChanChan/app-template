@@ -9,8 +9,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 /**
  * mybatis配置
  */
-@EnableTransactionManagement
 @Configuration
+@EnableTransactionManagement
 public class MybatisPlusConfig {
     /**
      * 分页插件

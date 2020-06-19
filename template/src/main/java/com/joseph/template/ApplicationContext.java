@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @since 2019/7/1 17:17
  */
 @MapperScan("com.joseph.template.dao")
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.joseph.template", "com.joseph.framework"})
 public class ApplicationContext {
 
     public static void main(String[] args) {
