@@ -7,9 +7,12 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.util.Date;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * <p>
@@ -85,17 +88,20 @@ public class AppInfo implements Serializable {
      */
     private Long status;
 
+    @TableField(exist = false)
+    private String statusName;
+
     /**
      * 上架时间
      */
     @TableField("onSaleDate")
-    private LocalDateTime onSaleDate;
+    private Date onSaleDate;
 
     /**
      * 下架时间
      */
     @TableField("offSaleDate")
-    private LocalDateTime offSaleDate;
+    private Date offSaleDate;
 
     /**
      * 所属平台（来源于：data_dictionary，1 手机 2 平板 3 通用）
@@ -124,7 +130,7 @@ public class AppInfo implements Serializable {
      * 创建时间
      */
     @TableField("creationDate")
-    private LocalDateTime creationDate;
+    private Date creationDate;
 
     /**
      * 更新者（来源于dev_user开发者信息表的用户id）
@@ -136,7 +142,7 @@ public class AppInfo implements Serializable {
      * 最新更新时间
      */
     @TableField("modifyDate")
-    private LocalDateTime modifyDate;
+    private Date modifyDate;
 
     /**
      * 所属一级分类（来源于：data_dictionary）
@@ -171,6 +177,14 @@ public class AppInfo implements Serializable {
 
     @TableField(exist = false)
     private String flatformName;
+
+    @TableField(exist = false)
+    private AppCategory category1;
+    @TableField(exist = false)
+    private AppCategory category2;
+    @TableField(exist = false)
+    private AppCategory category3;
+
 
 
 }

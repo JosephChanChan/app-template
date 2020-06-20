@@ -20,6 +20,8 @@ public enum ErrorResponseMsgEnum {
 	TAG_EXISTS ("200001", "已有存在的标签", "已有存在的标签"),
 	RESOURCE_NOT_FOUND ("-1004","资源不存在",null),
 
+	INVALID_PARAM("40001", "参数不合法", "请按照接口文档检查参数"),
+
 
 	CONNECTION_TIMEOUT("400011", "请求地址调用超时","请求地址调用超时"),
 	;

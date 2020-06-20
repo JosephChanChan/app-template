@@ -32,15 +32,15 @@
                   // var password=$("[name=devPassword]").val();
                   if(""!=$(".form-control").val()&&null!=$(".form-control").val()){
                       $.ajax({
-                          url:"${ctx}/devuser/devlogin.do",
+                          url:"${ctx}/auth/login",
                           // data:{"devCode":code,"devPassword":password},
                           data:$(".logfrom").serialize(),
                           type:"post",
                           dataType:"JSON",
-                          success:function (data) {
-                              if(data.result=="true"){
-                                  $(location).attr("href","/devuser/devindex.html")
-                              }else if (data.result="false"){
+                          success:function (result) {
+                              if(result.data===true){
+                                  $(location).attr("href","/dev/devIndexPage")
+                              }else if (result.data===false){
                                   $("#sp").text("用户名密码不正确");
                               }
                           },
@@ -64,12 +64,13 @@
         <div class="animate form login_form">
           <section class="login_content">
             <form action="##" method="post" class="logfrom">
+              <input type="hidden" name="realm" value="dev"/>
               <h1>APP开发者平台</h1>
               <div>
-                <input type="text" class="form-control" name="devCode" placeholder="请输入用户名" required="" />
+                <input type="text" class="form-control" name="loginName" placeholder="请输入用户名" required="" />
               </div>
               <div>
-                <input type="password" class="form-control" name="devPassword" placeholder="请输入密码" required="" />
+                <input type="password" class="form-control" name="cipher" placeholder="请输入密码" required="" />
               </div>
               <span id="sp"></span>
               <div>

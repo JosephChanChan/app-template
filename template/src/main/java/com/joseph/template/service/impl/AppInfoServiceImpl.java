@@ -38,6 +38,9 @@ public class AppInfoServiceImpl
         if (null != query.getFlatformId()) {
             queryWrapper.eq("flatformId", query.getFlatformId());
         }
+        if (null != query.getStatus()) {
+            queryWrapper.eq("status", query.getStatus());
+        }
         if (!StringUtils.isEmpty(query.getCategoryLevel1())) {
             queryWrapper.eq("categoryLevel1", query.getCategoryLevel1());
         }

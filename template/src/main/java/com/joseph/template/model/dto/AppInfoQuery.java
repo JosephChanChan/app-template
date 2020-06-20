@@ -19,5 +19,7 @@ public class AppInfoQuery extends Page<AppInfo> {
     private String categoryLevel2;
     private String categoryLevel3;
 
+    private Long status;
+
 
 }

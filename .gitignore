@@ -6,3 +6,5 @@ template/~/
 *.log
 *.class
 *.iml
+
+.idea/

@@ -86,7 +86,7 @@
                                         class="fa fa-chevron-down"></span>
                                 </a>
                                 <ul class="nav child_menu">
-                                    <li><a href="${ctx}/appinfo/appinfolist.html">APP维护</a>
+                                    <li><a href="${ctx}/dev/appListPage">APP维护</a>
                                     </li>
                                 </ul>
                             </li>
@@ -131,7 +131,7 @@
                                 class=" fa fa-angle-down"></span> </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
                                 <li><a
-                                        href="${ctx}/devuser/logout.html"><i
+                                        href="${ctx}/auth/logout"><i
                                         class="fa fa-sign-out pull-right"></i> Log Out</a>
                                 </li>
                             </ul>

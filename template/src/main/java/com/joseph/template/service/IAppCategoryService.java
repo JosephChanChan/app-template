@@ -13,4 +13,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IAppCategoryService extends IService<AppCategory> {
 
+
+    AppCategory query(long id);
+
+
 }
